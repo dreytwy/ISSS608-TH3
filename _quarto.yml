@@ -26,7 +26,7 @@ website:
         text: Prototype in Netlify
       - href: shiny_under_construction.qmd
         text: Prototype translated to Shiny
-      - href: shiny_under_construction.qmd
+      - href: shiny_under_construction_test.qmd
         text: Root Netlify
         
 format:
