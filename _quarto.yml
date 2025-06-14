@@ -1,7 +1,7 @@
 project:
   type: website
   # Render the mini-site into the main site’s folder so links work
-  output-dir: ../../_site/Take-home_Ex03_Standalone   # ← NEW
+  output-dir: C:/dreytwy/TH3/_site/   # ← NEW
   
 website:
   title: "Covert Reef <img src='img/coral.png' style='height:1.2em; vertical-align:middle;'>"
@@ -27,7 +27,7 @@ website:
       - href: shiny_under_construction.qmd
         text: Prototype translated to Shiny
       - href: https://isss608-ay2024-25-dreytwy.netlify.app/
-        text: Root Netlify
+        text: Back to Root Netlify
         
 format:
   html:

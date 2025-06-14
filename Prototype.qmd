@@ -1,6 +1,6 @@
 ---
 title: "Prototype"
-format:
+format: 
   html:
     theme: journal          
     toc: true

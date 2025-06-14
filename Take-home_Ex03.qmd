@@ -3,8 +3,8 @@ title: "Take-home_Ex03"
 author: "Audrey Tan"
 date: "13 June 2025"
 date-modified: "last-modified"
-format:
-  html:
+format: 
+  html: 
     theme: journal          
     toc: true
     toc-depth: 2

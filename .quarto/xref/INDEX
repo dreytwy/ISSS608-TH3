@@ -1,12 +1,15 @@
 {
   "Take-home_Ex03.qmd": {
-    "Take-home_Ex03.html": "3a430359"
+    "Take-home_Ex03.html": "3a430359",
+    "Take-home_Ex03.docx": "266f09aa"
   },
   "r_packg.qmd": {
-    "r_packg.html": "62a44e8c"
+    "r_packg.html": "62a44e8c",
+    "r_packg.docx": "2da68ddc"
   },
   "Introduction.qmd": {
-    "Introduction.html": "1a87b052"
+    "Introduction.html": "1a87b052",
+    "Introduction.docx": "afe54c7c"
   },
   "Storyboard_ UI_Design.qmd": {
     "Storyboard_ UI_Design.html": "02a473cc"
@@ -19,9 +22,19 @@
     "Prepatory.html": "c408e314"
   },
   "Prototype.qmd": {
-    "Prototype.html": "3efbd967"
+    "Prototype.html": "3efbd967",
+    "Prototype.docx": "9c90b99d"
   },
   "shiny_under_construction.qmd": {
     "shiny_under_construction.html": "db76735e"
+  },
+  "site_libs/Blob-1.0/LICENSE.md": {
+    "LICENSE.html": "70f4d118"
+  },
+  "site_libs/canvas-toBlob-1.0/LICENSE.md": {
+    "LICENSE.html": "77a9b2d6"
+  },
+  "site_libs/FileSaver-1.1.20151003/LICENSE.md": {
+    "LICENSE.html": "6a2cb33b"
   }
 }

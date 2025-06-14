@@ -14,6 +14,10 @@ This would be the prototype of the layout structure with navbar at the top, and 
 
 ## **Shiny Dashboard for Networks and Visualisations**
 
+**Combination of work:**
+
+We will be using some components from each group member in their Take Home Ex 02. For instance, the Communications, Heatmaps and Discussions from Yang Lu. The Networks, timestamps and discusssions from Jianyi. The Communications, Chord Diagram and Alluvial Diagram from Audrey.
+
 **Principles of usability and interactivity:**
 
 Our shiny compatible visualisations will have timeseries or related interactive shiny compatible subnetworks or visualisations. These may include hovers or other clickable components.
@@ -44,7 +48,73 @@ Our shiny compatible visualisations will have timeseries or related interactive 
 
 ![](images/clipboard-3834786926.png)
 
-## **Parameters and Outputs:**
+## **Zooming into the Storyboard:**
+
+Some examples of what each module will look like:
+
+## 1. Introduction
+
+![](images/Screenshot%202025-06-14%20132935.png)
+
+## 2.1 Background- Introduction to Final Product
+
+![](images/Screenshot%202025-06-14%20132945.png)
+
+## 2.2 Background- Questions
+
+![](images/Screenshot%202025-06-14%20132958.png)
+
+## 2.3 Background- The Data
+
+![](images/Screenshot%202025-06-14%20133006.png)
+
+## 2.4 Background- Methodology
+
+![](images/clipboard-2031690021.png)
+
+## 3. Setup
+
+![](images/clipboard-2411365144.png)
+
+## 4. Data Preparation
+
+![](images/clipboard-3082314933.png)
+
+## 5. Exploratory
+
+![](images/Screenshot%202025-06-14%20133101.png)
+
+![](images/clipboard-691208145.png)
+
+![](images/clipboard-636524256.png)
+
+![](images/clipboard-2189582806.png)
+
+## 6. Question 1
+
+![](images/Screenshot%202025-06-14%20133205.png)
+
+![](images/Screenshot%202025-06-14%20133222.png)
+
+![](images/Screenshot%202025-06-14%20133231.png)
+
+## 7. Question 2
+
+![](images/Screenshot%202025-06-14%20133322.png)
+
+## 8. Question 3
+
+![](images/Screenshot%202025-06-14%20133238.png)
+
+![](images/Screenshot%202025-06-14%20133256.png)
+
+![](images/Screenshot%202025-06-14%20133307.png)
+
+## 9. Question 4
+
+![](images/Screenshot%202025-06-14%20133328-01.png)
+
+## **Some other Parameters and Outputs:**
 
 ::: panel-tabset
 ## Inputs
@@ -88,7 +158,7 @@ These are some prototypes of the webpage and shiny application that we are plann
 
 -   Names of characters that are related to each other of certain time period
 
-## **Visualisation:**
+## **Visualisation Pointers:**
 
 -   We added shapes and colours to distinguish the Entity nodes (square, circle, triangle, diamond, short oval), relationship node (long oval), and Event-Communication nodes (star).
 
