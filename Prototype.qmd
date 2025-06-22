@@ -19,8 +19,6 @@ editor: visual
 
 # **Prototyping our "🌊Covert Reef🪸" Project**
 
-sus
-
 # **0) Visual Thematic Overview**
 
 Start off with wordclouds at the top of the webpage to serve as a precursor to key themes:
