@@ -19,7 +19,7 @@ editor: visual
 
 # **Prototyping our "🌊Covert Reef🪸" Project**
 
-We worked like a beaver to come up with our prototype to emulate a water tight product like the 🦫 beaver's dam. Here in this prototype section we will go through the preparatory work, visualisation design, tested r codes, and parameters and outputs. A Shiny prototype was also created subsequent to this. Shiny was used due to the many advantages such as automatic resizing. Click here for the Shiny prototype.
+sus
 
 # **0) Visual Thematic Overview**
 
@@ -4836,9 +4836,9 @@ print(unique_ids)
 
 -   Elise, EcoVigil, Elise, Davis, Liam, Mako, Neptune, Sam, Remora, Rodriguez, Sailor Shifts Team, Sentinel, The Accountant, Oceanus City Council, V. Miesel Shipping possibly found something suspicious or were involved in something suspicious.
 
-### 9.4.2 Plotted Timeline (3-hop)- Only suspicous communications
+### 9.4.2 Plotted Timeline (3-hop)- Only suspicious communications
 
-These are the suspicuous communications extracted from 9.4.1.
+These are the suspicious communications extracted from 9.4.1.
 
 ```{r}
 #| code-fold: true
