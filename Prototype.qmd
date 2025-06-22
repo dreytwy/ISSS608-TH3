@@ -1,13 +1,7 @@
 ---
 title: "Prototype"
-format: 
-  html:
-    theme: journal          
-    toc: true
-    toc-depth: 2
-    code-fold: true
-    code-summary: "Show the code"
-    page-layout: full
+format: docx
+
     
 execute:
   echo: true
@@ -1306,25 +1300,37 @@ ggplot(adj_df, aes(x = recipient_name, y = sender_name, fill = count)) +
 
 After extraction of the entities who communicated frequently (from the Static Chord Diagram), we tabled who they communicated with by using the heatmap. E.g. Name1 communicated with Name2.
 
-| Name 1 Subtype | Name1 | Name2 |
-|----|----|----|
-| Person | The Intern | The Lookout, Mrs. Money |
-| Person | Clepper Jensen | Miranda Jordan |
-| Person | Davis | Neptune |
-| Person | Mrs. Money | The Intern, The Middleman, Boss |
-| Vessel | Mako | Remora, Green Guardians, Oceanus City Council, Neptune, Reef Guardians, Himark Harbor, Davis, Sentinel, Paackland Habor, Samantha Blake, Serenity, Osprey |
-| Vessel | Remora | Mako, Neptune, Himark Habor, Davis, Paackland Harbor, V. Miesel Shipping, Marlin, Small Fry |
-| Vessel | Neptune | Mako, Himark Habor, Remora, Mrs Money, V. Miesel Shipping, Nadia, Serenity |
-| Vessel | Reef Guardian | Green Guardians, Oceanus City Council, Mako, Paackland Harbor, EcoVigil, Serenity, Defender |
-| Organization | Green Guardian | Green Guardians, Oceanus City Council, The Lookout, Sentinel, Horizon |
-| Organization | Oceanus City Council | Green Guardians, Reef Guardians, Himark Harbor, Sentinel, Paackland Harbor, Liam Thorne, Samantha Blake, Haacklee Harbor |
-| Location | Himark Habor | Oceanus City Council, Mako, Serenity, Marlin |
++----------------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Name 1 Subtype | Name1                | Name2                                                                                                                                                     |
++================+======================+===========================================================================================================================================================+
+| Person         | The Intern           | The Lookout, Mrs. Money                                                                                                                                   |
++----------------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Person         | Clepper Jensen       | Miranda Jordan                                                                                                                                            |
++----------------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Person         | Davis                | Neptune                                                                                                                                                   |
++----------------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Person         | Mrs. Money           | The Intern, The Middleman, Boss                                                                                                                           |
++----------------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Vessel         | Mako                 | Remora, Green Guardians, Oceanus City Council, Neptune, Reef Guardians, Himark Harbor, Davis, Sentinel, Paackland Habor, Samantha Blake, Serenity, Osprey |
++----------------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Vessel         | Remora               | Mako, Neptune, Himark Habor, Davis, Paackland Harbor, V. Miesel Shipping, Marlin, Small Fry                                                               |
++----------------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Vessel         | Neptune              | Mako, Himark Habor, Remora, Mrs Money, V. Miesel Shipping, Nadia, Serenity                                                                                |
++----------------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Vessel         | Reef Guardian        | Green Guardians, Oceanus City Council, Mako, Paackland Harbor, EcoVigil, Serenity, Defender                                                               |
++----------------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Organization   | Green Guardian       | Green Guardians, Oceanus City Council, The Lookout, Sentinel, Horizon                                                                                     |
++----------------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Organization   | Oceanus City Council | Green Guardians, Reef Guardians, Himark Harbor, Sentinel, Paackland Harbor, Liam Thorne, Samantha Blake, Haacklee Harbor                                  |
++----------------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Location       | Himark Habor         | Oceanus City Council, Mako, Serenity, Marlin                                                                                                              |
++----------------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 # **7) Tackling Question 2**
 
 In section 7 and 8, we attempted to find answers to question 2 and 4, as we explored other interesting information.
 
-# Question 2a
+# Question 2a)
 
 ### 7.1.2 Unique count from each sender subtype
 
@@ -2108,7 +2114,7 @@ p <- ggplot(plot_data, aes(x = id, y = n, fill = community)) + # <--- x = id (nu
 print(p)
 ```
 
-## The Code
+## allThe Code
 
 ``` r
 # --- Configuration ---
@@ -2809,22 +2815,23 @@ ggraph(g_pv, layout = "fr") +
     -   Community 3: N/A as they were not very influential at global level
     -   Community 4: Mrs. Money, Boss, The Middleman
     -   Community 5: N/A as they were not very influential at global level
-    -   Community 6: N/A as they were not very influential at global level
 
 ### 7.5.9 Wordclouds- Bigrams
 
-We focused on bigrams here to get more contextual data.
+We focused on bigrams here to get more contextual data from two instead of one word.
 
 ::: panel-tabset
 ## The Wordclouds
 
 ```{r, echo=FALSE}
 # 5b. Plot word clouds per community
-par(mfrow = c(2, 3))  # 2 rows, 3 columns layout for 5 communities
-for (i in sort(unique(bigrams$community))) {
+valid_communities <- unique(g_pv %>% as_tibble() %>% pull(community))
+
+par(mfrow = c(2, 3))  # Still allocate 6 slots, but you can adjust this
+for (i in sort(valid_communities)) {
   words <- bigrams %>% filter(community == i)
   
-  if (nrow(words) < 1) next  # Skip if no words
+  if (nrow(words) < 1) next
   
   suppressWarnings({
     set.seed(432)  # Set seed for reproducibility
@@ -2843,11 +2850,13 @@ for (i in sort(unique(bigrams$community))) {
 
 ``` r
 # 5b. Plot word clouds per community
-par(mfrow = c(2, 3))  # 2 rows, 3 columns layout for 5 communities
-for (i in sort(unique(bigrams$community))) {
+valid_communities <- unique(g_pv %>% as_tibble() %>% pull(community))
+
+par(mfrow = c(2, 3))  # Still allocate 6 slots, but you can adjust this
+for (i in sort(valid_communities)) {
   words <- bigrams %>% filter(community == i)
   
-  if (nrow(words) < 1) next  # Skip if no words
+  if (nrow(words) < 1) next
   
   suppressWarnings({
     set.seed(432)  # Set seed for reproducibility
@@ -2870,6 +2879,13 @@ for (i in sort(unique(bigrams$community))) {
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, `fig-width`=8, `fig-height`=8}
 set.seed(1234)
+
+valid_communities <- g_pv %>%
+  as_tibble() %>%
+  distinct(community) %>%
+  pull(community)
+
+bigrams <- bigrams %>% filter(community %in% valid_communities)
 
 # --- Configuration ---
 num_top_bigrams_per_community <- 8
@@ -3017,6 +3033,15 @@ print(p)
 
 ``` r
 set.seed(1234)
+
+set.seed(1234)
+
+valid_communities <- g_pv %>%
+  as_tibble() %>%
+  distinct(community) %>%
+  pull(community)
+
+bigrams <- bigrams %>% filter(community %in% valid_communities)
 
 # --- Configuration ---
 num_top_bigrams_per_community <- 8
@@ -3370,7 +3395,7 @@ We mainly focused on the conversations by 8 influential nodes and some related n
 
 -   If two names sent a message at the exact time, they cannot belong to the same person.
 
-We created Alluvia Diagrams to chart: real_identity → observed_name → community
+We created Alluvial Diagrams to chart: real_identity → observed_name → community
 
 ::: panel-tabset
 ## Extraction of the list of Entity names
@@ -3451,85 +3476,72 @@ multi_members <- tibble::tibble(
 ```
 :::
 
-## Entities- Interactive Sankey Diagrams
+## Entities- Interactive Alluvial Diagrams
 
-Created Sankey Diagram. Click to see details for individual identities.
+Hover to see details for individual identities.
 
 Real Identity from analysis -\> Observed Name from data -\> Community
 
+This will probably be a drop down for each name in Shiny.
+
 ```{r}
-library(shiny)
+# --- Libraries ---
+library(dplyr)
 library(ggplot2)
 library(ggalluvial)
-library(dplyr)
+library(stringr)
+library(plotly)
 
-# Example name_mapping
-name_mapping <- tibble::tibble(
-  observed_name = c("Boss", "Mrs. Money", "The Middleman", "Remora", "Small Fry", "Nadia Conti"),
-  real_identity = c("Nadia", "Nadia", "Liam Thorne", "Remora", "Neptune", "Nadia"),
-  community = c("V. Miesel Shipping", "V. Miesel Shipping", "Intermediaries", "Conservationists", "Research Vessels", "V. Miesel Shipping")
-)
-
-# Build alluvial dataset
+# --- 1. Build Alluvial Dataset ---
 alluvial_data <- name_mapping %>%
+  bind_rows(multi_members) %>% # Combine the two data sources
+  distinct() %>% # Remove any duplicate rows after combining
   filter(!is.na(real_identity) & !is.na(community)) %>%
-  count(real_identity, observed_name, community, name = "value")
+  count(real_identity, observed_name, community, name = "value") %>%
+  mutate(tooltip = paste0( # Create the tooltip string
+    "Real Identity: ", real_identity, "<br>",
+    "Observed Name: ", observed_name, "<br>",
+    "Community: ", community, "<br>",
+    "Count: ", value
+  ))
 
-# UI
-ui <- fluidPage(
-  titlePanel("Identity Flow Viewer"),
-  sidebarLayout(
-    sidebarPanel(
-      selectInput("person", "Select a Real Identity:", choices = c("All", unique(alluvial_data$real_identity)))
-    ),
-    mainPanel(
-      plotOutput("alluvialPlot", height = "600px")
-    )
+# --- 3. Create static ggplot object (original version) ---
+p <- ggplot(alluvial_data,
+            aes(axis1 = real_identity, axis2 = observed_name, axis3 = community,
+                y = value,
+                text = tooltip # Map the custom tooltip string to the 'text' aesthetic
+            )) +
+  geom_alluvium(aes(fill = real_identity), width = 1/12, alpha = 0.8) +
+  geom_stratum(width = 1/12, fill = "grey90", color = "black", aes(text = NULL)) + # No dual-role fill here
+  geom_text(stat = "stratum", aes(label = after_stat(stratum)), size = 3.5, hjust = 0) +
+  scale_x_discrete(
+    limits = c("Real Identity", "Observed Name", "Community"),
+    expand = c(.05, .25)
+  ) +
+  labs(
+    title = "All Identity Flows",
+    x = NULL, y = "Link Count"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none", # No legend for fill here
+    panel.grid = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks = element_blank(),
+    plot.margin = margin(10, 80, 10, 10),
+    axis.text.x = element_text(face = "bold")
   )
-)
 
-# Server
-server <- function(input, output, session) {
-
-  filtered_data <- reactive({
-    if (input$person == "All") {
-      alluvial_data
-    } else {
-      filter(alluvial_data, real_identity == input$person)
-    }
-  })
-
-  output$alluvialPlot <- renderPlot({
-    ggplot(filtered_data(),
-           aes(axis1 = real_identity, axis2 = observed_name, axis3 = community, y = value)) +
-      geom_alluvium(aes(fill = real_identity), width = 1/12, alpha = 0.8) +
-      geom_stratum(width = 1/12, fill = "grey90", color = "black") +
-      geom_text(stat = "stratum", aes(label = after_stat(stratum)), size = 3.5, hjust = 0) +
-      scale_x_discrete(
-        limits = c("Real Identity", "Observed Name", "Community"),
-        expand = c(.05, .05)
-      ) +
-      labs(
-        title = if (input$person == "All") "All Identity Flows" else paste(input$person, "'s Identity Flow"),
-        x = NULL, y = "Link Count"
-      ) +
-      theme_minimal() +
-      theme(
-        panel.grid = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks = element_blank()
-      )
-  })
-}
-
-# Run the app
-shinyApp(ui, server)
+# --- 4. Convert to interactive Plotly object ---
+# 'tooltip = "text"' tells Plotly to use the content of the 'text' aesthetic
+interactive_plot <- ggplotly(p, tooltip = "text", height = 800, width = 1000)
+interactive_plot # This line will print the Plotly object in  Quarto output
 
 ```
 
 # Question 3b)
 
-We created a graph with the character's original name, pseudonyms, and supplemented with any background information we learnt of. For instance, we learnt that Davis was a captain, or that Serenity was a private luxury yacht.Here, it is easier to determine who is using which pseudonyms by clicking on the real identiy drop down panel which will then only segregate to the individual's Real Identity, Observed Name, and Community.
+We created a graph with the character's original name, pseudonyms, and supplemented with any background information we learnt of. For instance, we learnt that Davis was a captain, or that Serenity was a private luxury yacht.Here, it is easier to determine who is using which pseudonyms by clicking on the real identity drop down panel which will then only segregate to the individual's Real Identity, Observed Name, and Community.
 
 # Question 3c)
 
@@ -3627,7 +3639,7 @@ ggraph(nadia_ego_graph, layout = "fr") +
 
 -   We wanted to find out if there were sub communities within Nadia's direct network that worked closely together.
 -   The orange community were possibly involved in Sailor Shifts's music video, while the green community were likely regarding ensuring compliance to authorities such as officials, the harbour and conservation team.
--   Nadia, Liam, and Marlin were the orange nodes that directly linked to the green nodes.
+-   Nadia, Elise, and Marlin were the orange nodes that directly linked to the green nodes.
 
 ## 9.2 Nadia's Sent and Received Ego Networks- VizNetwork
 
@@ -4319,17 +4331,17 @@ We then wanted to find more about the correspondences. The first graph illustrat
 
 -   The next step would be to find out the suspicious characters/ activities.
 
-## 9.3 Nadia's Ego Network: 2-hops degree centrality
+## 9.3 Nadia's Ego Network: 3-hops degree centrality
 
-To uncover more details, we designed n-hops degree centrality here. We input 2 hops to hover over the nodes and look into the communications in a wider network. We understand that should there be requirements for details, we could look into 3-hops and more.
+To uncover more details, we designed n-hops degree centrality here. We input 3 hops to hover over the nodes and look into the communications in a wider network. 3-hop exposes overlapping communites (Nadia communicating with someone who coordinates between groups). The "bridges" may show their value in 3-hops. It also increases the change of detecting complete or near complete cliques. We understand that should there be requirements for details, we could look into n-hops and more.
 
 ::: no-code-fold
 ```{r, echo=FALSE}
+#| code-fold: true
+#| code-summary: "Show the code"
 
-# ---- 1. Define styles and legends ----
 
-library(igraph)
-
+# --- Define event and relationship subtypes (optional, for filtering or labeling) ---
 event_subtypes <- c(
   "Communication", "Monitoring", "VesselMovement", "Assessment",
   "Collaborate", "Endorsement", "TourActivity", "TransponderPing",
@@ -4341,12 +4353,13 @@ relationship_subtypes <- c(
   "Suspicious", "Reports", "Jurisdiction", "Unfriendly", "Friends"
 )
 
+# --- Define node colors and shapes by type or key sub-type ---
 node_legend_colors_plot <- c(
   "Person" = "#88CCEE",
   "Vessel" = "#D55E00",
   "Organization" = "#117733",
   "Location" = "#AA4499",
-  "Group"= "#CC79A7",
+  "Group" = "#CC79A7",
   "Event" = "#DDCC77",
   "Relationship" = "#AF8DC3"
 )
@@ -4356,9 +4369,9 @@ node_legend_shapes_plot <- c(
   "Vessel" = "triangle",
   "Organization" = "square",
   "Location" = "diamond",
-  "Group" = "circle plus",
+  "Group" = "circle",
   "Event" = "star",
-  "Relationship" = "square x"
+  "Relationship" = "square"
 )
 
 STYLES <- list(
@@ -4366,17 +4379,21 @@ STYLES <- list(
   font_family = "Roboto Condensed"
 )
 
-# ---- Define ego extraction function ----
-extract_ego_subgraph <- function(center_node = "Nadia Conti", hops = 2) {
+# ---- 2. Define function to extract ego subgraph ----
+extract_ego_subgraph <- function(center_node = "Nadia Conti", hops = 3) {
+  # Construct igraph object
   g <- graph_from_data_frame(
     d = mc3_edges_final %>% select(from = from_id, to = to_id),
     vertices = mc3_nodes_final %>% select(id) %>% distinct() %>% rename(name = id),
     directed = TRUE
   )
+
+  # Extract ego network
   ego_graph <- make_ego_graph(g, order = hops, nodes = center_node, mode = "all")[[1]]
   node_ids <- V(ego_graph)$name
   edge_df <- as_data_frame(ego_graph, what = "edges")
 
+  # Prepare node metadata for visNetwork
   ego_nodes <- mc3_nodes_final %>%
     filter(id %in% node_ids) %>%
     mutate(
@@ -4397,25 +4414,28 @@ extract_ego_subgraph <- function(center_node = "Nadia Conti", hops = 2) {
         "Sub-type: ", sub_type, "<br>",
         ifelse(!is.na(tooltip_extra), paste0("<br><b>Details:</b> ", tooltip_extra), "")
       ),
-      group = ifelse(sub_type %in% names(node_legend_colors_plot), sub_type, type)
+      group = case_when(
+        sub_type %in% names(node_legend_colors_plot) ~ sub_type,
+        type %in% names(node_legend_colors_plot) ~ type,
+        TRUE ~ "Other"
+      )
     ) %>%
     select(id, label, group, title) %>%
-    distinct()
+    distinct(id, .keep_all = TRUE)
 
   list(nodes = ego_nodes, edges = edge_df)
 }
 
-# ---- Extract and build Nadia 2-hop ego network ----
-ego_data <- extract_ego_subgraph("Nadia Conti", hops = 2)
-
+# ---- 3. Extract Nadia Conti's 3-hop ego network ----
+ego_data <- extract_ego_subgraph("Nadia Conti", hops = 3)
 nodes <- ego_data$nodes
 edges <- ego_data$edges
 
-# Save for inspection or export
+# (Optional) Save output
 nadia_ego_nodes_2hop <- nodes
 nadia_ego_edges_2hop <- edges
 
-# ---- Build visNetwork ----
+# ---- 4. Build visNetwork plot ----
 net <- visNetwork(nodes, edges, width = "100%", height = "600px") %>%
   visEdges(arrows = list(to = list(enabled = TRUE, scaleFactor = 1.5))) %>%
   visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
@@ -4427,8 +4447,10 @@ net <- visNetwork(nodes, edges, width = "100%", height = "600px") %>%
     vadjust = -15
   ))
 
-# ---- Apply shape and color per group ----
-for (group_name in names(node_legend_colors_plot)) {
+# ---- 5. Apply color/shape for known groups ----
+used_groups <- intersect(unique(nodes$group), names(node_legend_colors_plot))
+
+for (group_name in used_groups) {
   net <- net %>% visGroups(
     groupname = group_name,
     color = node_legend_colors_plot[[group_name]],
@@ -4436,9 +4458,7 @@ for (group_name in names(node_legend_colors_plot)) {
   )
 }
 
-# ---- Add legend ----
-used_groups <- unique(nodes$group)
-
+# ---- 6. Add legend dynamically ----
 legend_df <- tibble::tibble(
   label = used_groups,
   shape = node_legend_shapes_plot[used_groups],
@@ -4454,8 +4474,10 @@ net <- net %>% visLegend(
   useGroups = FALSE
 )
 
-# ---- Render ----
+# ---- 7. Render the network ----
 net
+
+
 
 ```
 :::
@@ -4463,10 +4485,8 @@ net
 ```{r, results=FALSE}
 #| code-fold: true
 #| code-summary: "Show the code"
-# ---- 1. Define styles and legends ----
 
-library(igraph)
-
+# --- Define event and relationship subtypes (optional, for filtering or labeling) ---
 event_subtypes <- c(
   "Communication", "Monitoring", "VesselMovement", "Assessment",
   "Collaborate", "Endorsement", "TourActivity", "TransponderPing",
@@ -4478,12 +4498,13 @@ relationship_subtypes <- c(
   "Suspicious", "Reports", "Jurisdiction", "Unfriendly", "Friends"
 )
 
+# --- Define node colors and shapes by type or key sub-type ---
 node_legend_colors_plot <- c(
   "Person" = "#88CCEE",
   "Vessel" = "#D55E00",
   "Organization" = "#117733",
   "Location" = "#AA4499",
-  "Group"= "#CC79A7",
+  "Group" = "#CC79A7",
   "Event" = "#DDCC77",
   "Relationship" = "#AF8DC3"
 )
@@ -4493,9 +4514,9 @@ node_legend_shapes_plot <- c(
   "Vessel" = "triangle",
   "Organization" = "square",
   "Location" = "diamond",
-  "Group" = "circle plus",
+  "Group" = "circle",
   "Event" = "star",
-  "Relationship" = "square x"
+  "Relationship" = "square"
 )
 
 STYLES <- list(
@@ -4503,17 +4524,21 @@ STYLES <- list(
   font_family = "Roboto Condensed"
 )
 
-# ---- Define ego extraction function ----
-extract_ego_subgraph <- function(center_node = "Nadia Conti", hops = 2) {
+# ---- 2. Define function to extract ego subgraph ----
+extract_ego_subgraph <- function(center_node = "Nadia Conti", hops = 3) {
+  # Construct igraph object
   g <- graph_from_data_frame(
     d = mc3_edges_final %>% select(from = from_id, to = to_id),
     vertices = mc3_nodes_final %>% select(id) %>% distinct() %>% rename(name = id),
     directed = TRUE
   )
+
+  # Extract ego network
   ego_graph <- make_ego_graph(g, order = hops, nodes = center_node, mode = "all")[[1]]
   node_ids <- V(ego_graph)$name
   edge_df <- as_data_frame(ego_graph, what = "edges")
 
+  # Prepare node metadata for visNetwork
   ego_nodes <- mc3_nodes_final %>%
     filter(id %in% node_ids) %>%
     mutate(
@@ -4534,25 +4559,28 @@ extract_ego_subgraph <- function(center_node = "Nadia Conti", hops = 2) {
         "Sub-type: ", sub_type, "<br>",
         ifelse(!is.na(tooltip_extra), paste0("<br><b>Details:</b> ", tooltip_extra), "")
       ),
-      group = ifelse(sub_type %in% names(node_legend_colors_plot), sub_type, type)
+      group = case_when(
+        sub_type %in% names(node_legend_colors_plot) ~ sub_type,
+        type %in% names(node_legend_colors_plot) ~ type,
+        TRUE ~ "Other"
+      )
     ) %>%
     select(id, label, group, title) %>%
-    distinct()
+    distinct(id, .keep_all = TRUE)
 
   list(nodes = ego_nodes, edges = edge_df)
 }
 
-# ---- Extract and build Nadia 2-hop ego network ----
-ego_data <- extract_ego_subgraph("Nadia Conti", hops = 2)
-
+# ---- 3. Extract Nadia Conti's 3-hop ego network ----
+ego_data <- extract_ego_subgraph("Nadia Conti", hops = 3)
 nodes <- ego_data$nodes
 edges <- ego_data$edges
 
-# Save for inspection or export
+# (Optional) Save output
 nadia_ego_nodes_2hop <- nodes
 nadia_ego_edges_2hop <- edges
 
-# ---- Build visNetwork ----
+# ---- 4. Build visNetwork plot ----
 net <- visNetwork(nodes, edges, width = "100%", height = "600px") %>%
   visEdges(arrows = list(to = list(enabled = TRUE, scaleFactor = 1.5))) %>%
   visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
@@ -4564,8 +4592,10 @@ net <- visNetwork(nodes, edges, width = "100%", height = "600px") %>%
     vadjust = -15
   ))
 
-# ---- Apply shape and color per group ----
-for (group_name in names(node_legend_colors_plot)) {
+# ---- 5. Apply color/shape for known groups ----
+used_groups <- intersect(unique(nodes$group), names(node_legend_colors_plot))
+
+for (group_name in used_groups) {
   net <- net %>% visGroups(
     groupname = group_name,
     color = node_legend_colors_plot[[group_name]],
@@ -4573,9 +4603,7 @@ for (group_name in names(node_legend_colors_plot)) {
   )
 }
 
-# ---- Add legend ----
-used_groups <- unique(nodes$group)
-
+# ---- 6. Add legend dynamically ----
 legend_df <- tibble::tibble(
   label = used_groups,
   shape = node_legend_shapes_plot[used_groups],
@@ -4591,8 +4619,9 @@ net <- net %>% visLegend(
   useGroups = FALSE
 )
 
-# ---- Render ----
+# ---- 7. Render the network ----
 net
+
 
 ```
 
@@ -4600,32 +4629,36 @@ net
 
 -   Nodes from 1-hop: Nadia, Davis, Elise, Haacklee Habor, Liam, Marlin, Neptune, Oceanus City Council, Remora, Rodriguez, Sailor Shifts Team, Sentinel, V. Miesel Shipping.
 
--   Additional nodes from 2-hop: EcoVigil, Sam, The Accountant, Nemo Reef.
+-   Additional nodes from 3-hop: Conservation vessels, EcoVigil, Sam, The Accountant, Mako, Nemo Reef.
 
--   We would then use these 2-hop nodes to drill in deeper to find suspicious relationships between nodes.
+-   We would then use these 3-hop nodes to drill in deeper to find suspicious relationships between nodes.
 
 # Question 4b)
 
 ## **9.4 Summary of Nadia's Actions**
 
-### 9.4.1 Sequential Timeline in Table (2-hop)
+### 9.4.1 Sequential Timeline in Table (3-hop)
 
 ::: panel-tabset
 ## The Suspicious Entities
 
 ```{r, echo=FALSE}
-# Extract Nadia Conti's 2-hop ego network
+# Extract Nadia Conti's 3-hop ego network
+
+# ---- Step 1: Create igraph from edge list ----
 g <- graph_from_data_frame(
   d = mc3_edges_final %>% select(from = from_id, to = to_id),
   vertices = mc3_nodes_final %>% select(id) %>% distinct() %>% rename(name = id),
   directed = TRUE
 )
 
-ego_graph <- make_ego_graph(g, order = 2, nodes = "Nadia Conti", mode = "all")[[1]]
+# ---- Step 2: Extract 3-hop ego network for Nadia Conti ----
+ego_graph <- make_ego_graph(g, order = 3, nodes = "Nadia Conti", mode = "all")[[1]]
 node_ids <- V(ego_graph)$name
 edge_df <- as_data_frame(ego_graph, what = "edges")
 
-nadia_ego_nodes_2hop <- mc3_nodes_final %>%
+# ---- Step 3: Enrich ego nodes with labels and metadata ----
+nadia_ego_nodes_3hop <- mc3_nodes_final %>%
   filter(id %in% node_ids) %>%
   mutate(
     label = ifelse(is.na(name), id, name),
@@ -4641,27 +4674,38 @@ nadia_ego_nodes_2hop <- mc3_nodes_final %>%
     )
   )
 
-nadia_ego_edges_2hop <- edge_df %>%
-  left_join(nadia_ego_nodes_2hop %>% select(id, sender_name = label, sender_sub_type = sub_type), by = c("from" = "id")) %>%
-  left_join(nadia_ego_nodes_2hop %>% select(id, recipient_name = label, recipient_sub_type = sub_type), by = c("to" = "id"))
+# ---- Step 4: Enrich edges with sender/recipient names and types ----
+nadia_ego_edges_3hop <- edge_df %>%
+  left_join(nadia_ego_nodes_3hop %>% select(id, sender_name = label, sender_sub_type = sub_type), by = c("from" = "id")) %>%
+  left_join(nadia_ego_nodes_3hop %>% select(id, recipient_name = label, recipient_sub_type = sub_type), by = c("to" = "id"))
 
-nadia_ego_comm_df <- edge_df %>%
-  left_join(nadia_ego_nodes_2hop %>% select(id, name, sub_type), by = c("from" = "id")) %>%
+# ---- Step 5: Create detailed communication dataframe ----
+nadia_ego_comm_df_3hop <- edge_df %>%
+  left_join(
+    nadia_ego_nodes_3hop %>%
+      select(id, name, sub_type),
+    by = c("from" = "id")
+  ) %>%
   rename(
     sender_id = from,
     sender_name = name,
     sender_type = sub_type
   ) %>%
-  left_join(nadia_ego_nodes_2hop %>% select(id, name, sub_type, content, findings, destination, results, coordination_type, operational_role, jurisdiction_type, timestamp), 
-            by = c("to" = "id")) %>%
+  left_join(
+    nadia_ego_nodes_3hop %>%
+      select(id, name, sub_type, content, findings, destination, results,
+             coordination_type, operational_role, jurisdiction_type, timestamp),
+    by = c("to" = "id")
+  ) %>%
   rename(
     recipient_id = to,
     recipient_name = name,
     recipient_type = sub_type
   ) %>%
   mutate(
-    details = coalesce(content, findings, destination, results, coordination_type, operational_role, jurisdiction_type),
-    timestamp = ymd_hms(timestamp)
+    details = coalesce(content, findings, destination, results,
+                       coordination_type, operational_role, jurisdiction_type),
+    timestamp = suppressWarnings(ymd_hms(timestamp))
   ) %>%
   select(
     sender_id, sender_name, sender_type,
@@ -4669,36 +4713,47 @@ nadia_ego_comm_df <- edge_df %>%
     timestamp, details
   )
 
-# Print table of suspicious activities/ characters
-suspicious_links <- nadia_ego_comm_df %>%
+# ---- Step 6: Filter for 'suspicious' in any relevant field ----
+suspicious_links <- nadia_ego_comm_df_3hop %>%
   filter(
-    grepl("Suspicious", sender_type, ignore.case = TRUE) |
-    grepl("Suspicious", recipient_type, ignore.case = TRUE)
+    grepl("suspicious", sender_id, ignore.case = TRUE) |
+    grepl("suspicious", sender_type, ignore.case = TRUE) |
+    grepl("suspicious", recipient_id, ignore.case = TRUE) |
+    grepl("suspicious", recipient_type, ignore.case = TRUE)
   ) %>%
   select(
-    sender_id, sender_type,
-    recipient_id, recipient_type
+    sender_id, sender_name, sender_type,
+    recipient_id, recipient_name, recipient_type
   )
 
-print(suspicious_links)
+
+# ---- Step 7: View suspicious interactions ----
+unique_ids <- unique(c(suspicious_links$sender_id, suspicious_links$recipient_id))
+print(unique_ids)
 
 ```
 
 ## The Code
 
 ``` r
-# Extract Nadia Conti's 2-hop ego network
+# Extract Nadia Conti's 3-hop ego network
+#| code-fold: true
+#| code-summary: "Show the code"
+
+# ---- Step 1: Create igraph from edge list ----
 g <- graph_from_data_frame(
   d = mc3_edges_final %>% select(from = from_id, to = to_id),
   vertices = mc3_nodes_final %>% select(id) %>% distinct() %>% rename(name = id),
   directed = TRUE
 )
 
-ego_graph <- make_ego_graph(g, order = 2, nodes = "Nadia Conti", mode = "all")[[1]]
+# ---- Step 2: Extract 3-hop ego network for Nadia Conti ----
+ego_graph <- make_ego_graph(g, order = 3, nodes = "Nadia Conti", mode = "all")[[1]]
 node_ids <- V(ego_graph)$name
 edge_df <- as_data_frame(ego_graph, what = "edges")
 
-nadia_ego_nodes_2hop <- mc3_nodes_final %>%
+# ---- Step 3: Enrich ego nodes with labels and metadata ----
+nadia_ego_nodes_3hop <- mc3_nodes_final %>%
   filter(id %in% node_ids) %>%
   mutate(
     label = ifelse(is.na(name), id, name),
@@ -4714,27 +4769,38 @@ nadia_ego_nodes_2hop <- mc3_nodes_final %>%
     )
   )
 
-nadia_ego_edges_2hop <- edge_df %>%
-  left_join(nadia_ego_nodes_2hop %>% select(id, sender_name = label, sender_sub_type = sub_type), by = c("from" = "id")) %>%
-  left_join(nadia_ego_nodes_2hop %>% select(id, recipient_name = label, recipient_sub_type = sub_type), by = c("to" = "id"))
+# ---- Step 4: Enrich edges with sender/recipient names and types ----
+nadia_ego_edges_3hop <- edge_df %>%
+  left_join(nadia_ego_nodes_3hop %>% select(id, sender_name = label, sender_sub_type = sub_type), by = c("from" = "id")) %>%
+  left_join(nadia_ego_nodes_3hop %>% select(id, recipient_name = label, recipient_sub_type = sub_type), by = c("to" = "id"))
 
-nadia_ego_comm_df <- edge_df %>%
-  left_join(nadia_ego_nodes_2hop %>% select(id, name, sub_type), by = c("from" = "id")) %>%
+# ---- Step 5: Create detailed communication dataframe ----
+nadia_ego_comm_df_3hop <- edge_df %>%
+  left_join(
+    nadia_ego_nodes_3hop %>%
+      select(id, name, sub_type),
+    by = c("from" = "id")
+  ) %>%
   rename(
     sender_id = from,
     sender_name = name,
     sender_type = sub_type
   ) %>%
-  left_join(nadia_ego_nodes_2hop %>% select(id, name, sub_type, content, findings, destination, results, coordination_type, operational_role, jurisdiction_type, timestamp), 
-            by = c("to" = "id")) %>%
+  left_join(
+    nadia_ego_nodes_3hop %>%
+      select(id, name, sub_type, content, findings, destination, results,
+             coordination_type, operational_role, jurisdiction_type, timestamp),
+    by = c("to" = "id")
+  ) %>%
   rename(
     recipient_id = to,
     recipient_name = name,
     recipient_type = sub_type
   ) %>%
   mutate(
-    details = coalesce(content, findings, destination, results, coordination_type, operational_role, jurisdiction_type),
-    timestamp = ymd_hms(timestamp)
+    details = coalesce(content, findings, destination, results,
+                       coordination_type, operational_role, jurisdiction_type),
+    timestamp = suppressWarnings(ymd_hms(timestamp))
   ) %>%
   select(
     sender_id, sender_name, sender_type,
@@ -4742,38 +4808,55 @@ nadia_ego_comm_df <- edge_df %>%
     timestamp, details
   )
 
-# Print table of suspicious activities/ characters
-suspicious_links <- nadia_ego_comm_df %>%
+# ---- Step 6: Filter for 'suspicious' in any relevant field ----
+suspicious_links <- nadia_ego_comm_df_3hop %>%
   filter(
-    grepl("Suspicious", sender_type, ignore.case = TRUE) |
-    grepl("Suspicious", recipient_type, ignore.case = TRUE)
+    grepl("suspicious", sender_id, ignore.case = TRUE) |
+    grepl("suspicious", sender_type, ignore.case = TRUE) |
+    grepl("suspicious", recipient_id, ignore.case = TRUE) |
+    grepl("suspicious", recipient_type, ignore.case = TRUE)
   ) %>%
   select(
-    sender_id, sender_type,
-    recipient_id, recipient_type
+    sender_id, sender_name, sender_type,
+    recipient_id, recipient_name, recipient_type
   )
 
-print(suspicious_links)
+
+# ---- Step 7: View suspicious interactions ----
+unique_ids <- unique(c(suspicious_links$sender_id, suspicious_links$recipient_id))
+print(unique_ids)
 ```
 :::
 
--   Elise, Liam, EcoVigil, Sentinel, Oceanus City Council, V. Miesel Shipping possibly found something suspicious or were involved in something suspicious.
+-   Elise, EcoVigil, Elise, Davis, Liam, Mako, Neptune, Sam, Remora, Rodriguez, Sailor Shifts Team, Sentinel, The Accountant, Oceanus City Council, V. Miesel Shipping possibly found something suspicious or were involved in something suspicious.
 
-### 9.4.2 Plotted Timeline (2-hop)
+### 9.4.2 Plotted Timeline (3-hop)- Only suspicous communications
+
+These are the suspicuous communications extracted from 9.4.1.
 
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
-#Filtering communications that matches Nadia's 2 hop data
-event_ids_to_extract <- nadia_ego_comm_df %>%
-  filter(str_starts(sender_id, "Event_Communication_")) %>%
-  pull(sender_id) %>%
-  unique()
 
-matched_comms_df<- other_communications_df %>%
+# ---- Step 1: Define fixed suspicious Event_Communication IDs ----
+event_ids_to_extract <- c(
+  "Event_Communication_222", "Event_Communication_270",
+  "Event_Communication_272", "Event_Communication_370",
+  "Event_Communication_485", "Event_Communication_535",
+  "Event_Communication_565", "Event_Communication_574",
+  "Event_Communication_601", "Event_Communication_612",
+  "Event_Communication_639", "Event_Communication_677",
+  "Event_Communication_724", "Event_Communication_726",
+  "Event_Communication_753", "Event_Communication_761",
+  "Event_Communication_833", "Event_Communication_916",
+  "Event_Communication_951"
+)
+
+# ---- Step 2: Match to master communication events ----
+matched_comms_df <- other_communications_df %>%
   filter(event_id %in% event_ids_to_extract)
 
-# --- FACTORING and DATETIME CLEANING ---
+# ---- Step 3: Prepare data for plotting ----
 matched_comms_df_for_plot <- matched_comms_df %>%
   mutate(
     timestamp = as.POSIXct(timestamp),
@@ -4783,71 +4866,167 @@ matched_comms_df_for_plot <- matched_comms_df %>%
     communicating_pair_sorted = paste(pmin(sender_name, recipient_name), pmax(sender_name, recipient_name), sep = " & ")
   )
 
-# 7. Add wrapped tooltip content for timeline plotting
+# ---- Step 4: Add tooltip labels ----
 plot_data <- matched_comms_df_for_plot %>%
   mutate(
-    timestamp = as.POSIXct(timestamp),
-    date = as.Date(timestamp),
-    time = format(timestamp, "%H:%M:%S"),
     wrapped_content = str_wrap(content, width = 50),
     tooltip_text = paste0(
-      "<b>Date:</b> ", date, "<br>",
-      "<b>Time:</b> ", time, "<br>",
-      "<b>Event_id:</b> ", event_id, "<br><br>",
+      "<b>Date:</b> ", comm_date, "<br>",
+      "<b>Time:</b> ", format(comm_time_of_day, "%H:%M:%S"), "<br>",
+      "<b>Event ID:</b> ", event_id, "<br><br>",
       "<b>From:</b> ", sender_name, "<br>",
       "<b>To:</b> ", recipient_name, "<br><br>",
       "<b>Content:</b><br>", wrapped_content
     )
   )
 
-# 8. Create plot with consistent 6-hour y-axis time scale
-p <-ggplot(plot_data, aes(x = comm_date, y = comm_time_of_day)) +
+# ---- Step 5: Generate timeline plot ----
+p <- ggplot(plot_data, aes(x = comm_date, y = comm_time_of_day)) +
   geom_point(aes(
-    color = sender_id,
+    color = sender_name,
     shape = sender_sub_type,
     text = tooltip_text
-  ),show.legend = c(color = TRUE, shape = FALSE), 
-  size = 2, alpha = 0.7) +
-  scale_shape_manual(values = c("Person" = 16, 
-                                "Vessel" = 17,
-                                "Organization" = 15,
-                                "Location" = 18
-                                  )) +
-  facet_wrap(~ sender_sub_type, ncol = 1, scales = "fixed") +
-    scale_y_time(
-    limits = hms::as_hms(c("08:00:00", "14:00:00")),  # reversed to show time top-to-bottom
+  ), show.legend = c(color = TRUE, shape = FALSE), size = 2, alpha = 0.7) +
+
+  scale_shape_manual(values = c(
+    "Person" = 16,
+    "Vessel" = 17,
+    "Organization" = 15,
+    "Location" = 18
+  )) +
+
+  scale_y_time(
+    limits = hms::as_hms(c("08:00:00", "14:00:00")),
     breaks = hms::as_hms(c("08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00", "13:00:00", "14:00:00")),
     labels = c("08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00")
-)+
-  scale_x_date(
-  date_breaks = "1 day",
-  date_labels = "%d %b"
-)+
-
-  facet_wrap(~ sender_sub_type, ncol = 1) +
-  labs(
-    title = "Nadia's 2-hop Communications (Sender's perspective)",
-    x = "Date", y = "Time of Day", color = "Sender (subtype, name)"
   ) +
+
+  scale_x_date(
+    date_breaks = "1 day",
+    date_labels = "%d %b"
+  ) +
+
+  facet_wrap(~ sender_sub_type, ncol = 1, scales = "fixed") +
+
+  labs(
+    title = "Suspicious Communications Timeline (Nadia's 3-hop Ego Network)",
+    x = "Date",
+    y = "Time of Day",
+    color = "Sender"
+  ) +
+
   theme_grey() +
   theme(
     axis.text.y = element_text(size = 6),
     axis.title.y = element_text(size = 7),
-    axis.ticks.y = element_line(),
     axis.text.x = element_text(size = 6, angle = 45, hjust = 1),
     axis.title.x = element_text(margin = margin(t = 10), size = 7),
-    panel.spacing = unit(0.5, "lines"),  # Applies to both x and y spacing
+    panel.spacing = unit(0.5, "lines"),
     strip.text = element_text(size = 8, face = "bold"),
     legend.position = "bottom",
     legend.text = element_text(size = 6),
-    legend.title = element_blank()
+    legend.title = element_text(size = 7)
   )
 
-# 9. Make interactive with Plotly
+# ---- Step 6: Convert to interactive plot ----
 ggplotly(p, tooltip = "text")
+
 ```
 
-## **9.5 Discussion/Interpretation (1 & 2 hop data):**
+### Plotted Timeline (3-hop)- Full communications
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+
+# ---- Step 1: Extract Communication Event IDs from Nadia's 3-hop ego network ----
+event_ids_to_extract <- nadia_ego_comm_df_3hop %>%
+  filter(str_starts(sender_id, "Event_Communication_")) %>%
+  pull(sender_id) %>%
+  unique()
+
+# ---- Step 2: Match to master communication events ----
+matched_comms_df <- other_communications_df %>%
+  filter(event_id %in% event_ids_to_extract)
+
+# ---- Step 3: Prepare data for plotting ----
+matched_comms_df_for_plot <- matched_comms_df %>%
+  mutate(
+    timestamp = as.POSIXct(timestamp),
+    comm_date = as.Date(timestamp),
+    comm_time_of_day = hms::as_hms(format(timestamp, "%H:%M:%S")),
+    sender_sub_type = factor(sender_sub_type, levels = c("Person", "Vessel", "Organization", "Location")),
+    communicating_pair_sorted = paste(pmin(sender_name, recipient_name), pmax(sender_name, recipient_name), sep = " & ")
+  )
+
+# ---- Step 4: Add tooltip labels ----
+plot_data <- matched_comms_df_for_plot %>%
+  mutate(
+    wrapped_content = str_wrap(content, width = 50),
+    tooltip_text = paste0(
+      "<b>Date:</b> ", comm_date, "<br>",
+      "<b>Time:</b> ", format(comm_time_of_day, "%H:%M:%S"), "<br>",
+      "<b>Event ID:</b> ", event_id, "<br><br>",
+      "<b>From:</b> ", sender_name, "<br>",
+      "<b>To:</b> ", recipient_name, "<br><br>",
+      "<b>Content:</b><br>", wrapped_content
+    )
+  )
+
+# ---- Step 5: Generate timeline plot ----
+p <- ggplot(plot_data, aes(x = comm_date, y = comm_time_of_day)) +
+  geom_point(aes(
+    color = sender_name,
+    shape = sender_sub_type,
+    text = tooltip_text
+  ), show.legend = c(color = TRUE, shape = FALSE), size = 2, alpha = 0.7) +
+
+  scale_shape_manual(values = c(
+    "Person" = 16,
+    "Vessel" = 17,
+    "Organization" = 15,
+    "Location" = 18
+  )) +
+
+  scale_y_time(
+    limits = hms::as_hms(c("08:00:00", "14:00:00")),
+    breaks = hms::as_hms(c("08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00", "13:00:00", "14:00:00")),
+    labels = c("08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00")
+  ) +
+
+  scale_x_date(
+    date_breaks = "1 day",
+    date_labels = "%d %b"
+  ) +
+
+  facet_wrap(~ sender_sub_type, ncol = 1, scales = "fixed") +
+
+  labs(
+    title = "Nadia's 3-hop Communications Timeline (Sender Perspective)",
+    x = "Date",
+    y = "Time of Day",
+    color = "Sender"
+  ) +
+
+  theme_grey() +
+  theme(
+    axis.text.y = element_text(size = 6),
+    axis.title.y = element_text(size = 7),
+    axis.text.x = element_text(size = 6, angle = 45, hjust = 1),
+    axis.title.x = element_text(margin = margin(t = 10), size = 7),
+    panel.spacing = unit(0.5, "lines"),
+    strip.text = element_text(size = 8, face = "bold"),
+    legend.position = "bottom",
+    legend.text = element_text(size = 6),
+    legend.title = element_text(size = 7)
+  )
+
+# ---- Step 6: Convert to interactive plot ----
+ggplotly(p, tooltip = "text")
+
+```
+
+## **9.5 Discussion/Interpretation (1 & 3 hop data):**
 
 There were certain questions we posted to ourselves and came out with the answers.
 
@@ -4876,33 +5055,51 @@ In the `nadia_full_communications_timeline` table, the actual content of her dir
 ::: panel-tabset
 ### Not in the Network but Mentioned in the Content
 
-| Entity | Form of Subject Matter | Rationale | Event ID |
-|----|----|----|----|
-| Nemo Reef | Location | Likely conservation area which was picked by the characters for illicit activities. | 331, 943 |
-| Permit #CR-7844 | Item | Likely a permit to show tourism activity as a cover for suspicious activities. Rodriguez is likely linked to vessels Mako, Neptune, and Remora operating under this permit with a tourism facade. | 582, 847, 805 |
-| EcoVigil | Vessel | EcoVigil will likely affect Nadia's operations when they use their ROV. Nadia recommended to V. Miesel to accelerate the planned operation. They were likely working for different sides. | 753, 847 |
++-----------------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+
+| Entity          | Form of Subject Matter | Rationale                                                                                                                                                                                         | Event ID      |
++=================+========================+===================================================================================================================================================================================================+===============+
+| Nemo Reef       | Location               | Likely conservation area which was picked by the characters for illicit activities.                                                                                                               | 331, 943      |
++-----------------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+
+| Permit #CR-7844 | Item                   | Likely a permit to show tourism activity as a cover for suspicious activities. Rodriguez is likely linked to vessels Mako, Neptune, and Remora operating under this permit with a tourism facade. | 582, 847, 805 |
++-----------------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+
+| EcoVigil        | Vessel                 | EcoVigil will likely affect Nadia's operations when they use their ROV. Nadia recommended to V. Miesel to accelerate the planned operation. They were likely working for different sides.         | 753, 847      |
++-----------------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+
 
 ### Suspicious Entity
 
-| Suspicious Entity | Sub Type | Community | Rationale | Event ID |
-|----|----|----|----|----|
-| Haacklee Harbor | Location | 2 | Nadia's communication to Haacklee Harbor is suspicious when she wanted the documents destroyed and the special corridor to Nemo Reef cancelled. | 331 |
-| Liam aka The Middleman | Person | 2 | Nadia wanted him to double his usual fee to ensure Harbor Master remains cooperative. Identity revealed through: | 529, 795, 847 |
-| Davis | Person | 1 | Nadia told him to create a clean paper trail. She will provide permits. | 521 |
-| Elise aka Mrs. Money | Person | 1 | Nadia warned Elise that conservation vessels might complicate their operation. Identity revealed through: | 708, 528, 538, 677 |
-| Rodriguez aka Small Fry | Person | 1 | Linked to Mako, which is operating under a permit with a tourism facade. | 805 |
-| Remora | Vessel | 1 | Remora reported a tourism facade to Nadia and planned underwater lighting placements in Nemo Reef while monitoring conservation vessels. | 943 |
-| Neptune | Vessel | 1 | Nadia told Neptune to stay under the radar. | 538 |
-| V. Miesel HQ | Organisation | 1 | Organisation was aware of the suspicious permit and The Middleman. | 846, 847 |
-| Sailor Shifts Team aka Glitters Team | Organisation | 1 | Nadia provided crew members for the setup related to the permit. | 520 |
++--------------------------------------+--------------+-----------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+
+| Suspicious Entity                    | Sub Type     | Community | Rationale                                                                                                                                       | Event ID           |
++======================================+==============+===========+=================================================================================================================================================+====================+
+| Haacklee Harbor                      | Location     | 2         | Nadia's communication to Haacklee Harbor is suspicious when she wanted the documents destroyed and the special corridor to Nemo Reef cancelled. | 331                |
++--------------------------------------+--------------+-----------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+
+| Liam aka The Middleman               | Person       | 2         | Nadia wanted him to double his usual fee to ensure Harbor Master remains cooperative. Identity revealed through:                                | 529, 795, 847      |
++--------------------------------------+--------------+-----------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+
+| Davis                                | Person       | 1         | Nadia told him to create a clean paper trail. She will provide permits.                                                                         | 521                |
++--------------------------------------+--------------+-----------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+
+| Elise aka Mrs. Money                 | Person       | 1         | Nadia warned Elise that conservation vessels might complicate their operation. Identity revealed through:                                       | 708, 528, 538, 677 |
++--------------------------------------+--------------+-----------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+
+| Rodriguez aka Small Fry              | Person       | 1         | Linked to Mako, which is operating under a permit with a tourism facade.                                                                        | 805                |
++--------------------------------------+--------------+-----------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+
+| Remora                               | Vessel       | 1         | Remora reported a tourism facade to Nadia and planned underwater lighting placements in Nemo Reef while monitoring conservation vessels.        | 943                |
++--------------------------------------+--------------+-----------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+
+| Neptune                              | Vessel       | 1         | Nadia told Neptune to stay under the radar.                                                                                                     | 538                |
++--------------------------------------+--------------+-----------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+
+| V. Miesel HQ                         | Organisation | 1         | Organisation was aware of the suspicious permit and The Middleman.                                                                              | 846, 847           |
++--------------------------------------+--------------+-----------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+
+| Sailor Shifts Team aka Glitters Team | Organisation | 1         | Nadia provided crew members for the setup related to the permit.                                                                                | 520                |
++--------------------------------------+--------------+-----------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+
 
 ### Non Suspicious Entity
 
-| Non Suspicious Entity | Sub Type | Community | Rationale | Event ID |
-|----|----|----|----|----|
-| Oceanus City Council | Organisation | 2 | Oceanus City Council as a whole is not suspicious as an organisation as Liam stated this organisation suspected nothing. | 535 |
-| Sentinel | Vessel | 2 | Sentinel Vessel suspected ulterior motives as the water quality was fine. | 677 |
-| Marlin | Vessel | 2 | Marlin inquired about unusual vessel routes near eastern shoals, Nadia and Davis might need to address this. | 584 |
++-----------------------+--------------+-----------+--------------------------------------------------------------------------------------------------------------------------+----------+
+| Non Suspicious Entity | Sub Type     | Community | Rationale                                                                                                                | Event ID |
++=======================+==============+===========+==========================================================================================================================+==========+
+| Oceanus City Council  | Organisation | 2         | Oceanus City Council as a whole is not suspicious as an organisation as Liam stated this organisation suspected nothing. | 535      |
++-----------------------+--------------+-----------+--------------------------------------------------------------------------------------------------------------------------+----------+
+| Sentinel              | Vessel       | 2         | Sentinel Vessel suspected ulterior motives as the water quality was fine.                                                | 677      |
++-----------------------+--------------+-----------+--------------------------------------------------------------------------------------------------------------------------+----------+
+| Marlin                | Vessel       | 2         | Marlin inquired about unusual vessel routes near eastern shoals, Nadia and Davis might need to address this.             | 584      |
++-----------------------+--------------+-----------+--------------------------------------------------------------------------------------------------------------------------+----------+
 :::
 
 ## **9.6 Querying Keywords**
@@ -4915,49 +5112,46 @@ Based on our knowledge, we decided to connect to external information. We used k
 #| code-fold: true
 #| code-summary: "Show the code"
 
-library(dplyr)
-library(stringr)
-library(ggplot2)
-library(plotly)
-library(hms)
-library(tidyr)
-
 # -- Step 1: Define keywords
 keywords <- c("permit", "1045", "7844")
 pattern <- paste0("\\b(", paste(keywords, collapse = "|"), ")\\b")
 
-# -- Step 2: Filter messages
-search_target_content <- tolower(other_communications_df$content)
-
+# -- Step 2: Filter messages with keyword match (case-insensitive)
 keyword_matches_df <- other_communications_df %>%
-  filter(str_detect(search_target_content, pattern))
+  mutate(content_lower = tolower(content)) %>%
+  filter(str_detect(content_lower, pattern))
 
-# -- Step 3: Extract keywords
+# -- Step 3: Extract and annotate keyword matches
 plot_data <- keyword_matches_df %>%
-  mutate(matched_keywords = str_extract_all(tolower(content), pattern)) %>%
-  unnest(matched_keywords) %>%
-  mutate(matched_keywords = str_to_title(matched_keywords)) %>%
-  arrange(matched_keywords, timestamp) %>%
   mutate(
-    timestamp = as.POSIXct(timestamp),
+    matched_keywords = str_extract_all(content_lower, pattern),
+    timestamp = suppressWarnings(as.POSIXct(timestamp)),
     comm_date = as.Date(timestamp),
-    comm_time_of_day = hms::as_hms(format(timestamp, "%H:%M:%S")),
-    wrapped_content = str_wrap(content, width = 50),
+    comm_time_of_day = suppressWarnings(hms::as_hms(format(timestamp, "%H:%M:%S"))),
+    wrapped_content = str_wrap(content, width = 50)
+  ) %>%
+  unnest(matched_keywords) %>%
+  mutate(
+    matched_keywords = recode(matched_keywords,
+      "permit" = "Permit",
+      "1045" = "# 1045",
+      "7844" = "# 7844"
+    ),
     tooltip_text = paste0(
       "<b>Date:</b> ", comm_date,
-      "<br><b>Time:</b> ", comm_time_of_day,
+      "<br><b>Time:</b> ", format(comm_time_of_day, "%H:%M:%S"),
       "<br><b>Event ID:</b> ", event_id,
       "<br><b>Content:</b><br>", wrapped_content
     )
   )
 
-# -- Step 4: Plot
+# -- Step 4: Plot timeline
 p <- ggplot(plot_data, aes(x = comm_date, y = comm_time_of_day)) +
   geom_point(aes(
     color = matched_keywords,
     shape = sender_sub_type,
     text = tooltip_text,
-    group = matched_keywords  # ensures matched_keywords is in layer
+    group = matched_keywords
   ), size = 2.5, alpha = 0.7, show.legend = TRUE) +
   scale_shape_manual(values = c(
     "Person" = 16,
@@ -4977,7 +5171,7 @@ p <- ggplot(plot_data, aes(x = comm_date, y = comm_time_of_day)) +
     x = "Date",
     y = "Time of Day",
     shape = "Sender Type",
-    color = " "
+    color = "Keyword"
   ) +
   theme_grey() +
   theme(
@@ -4986,7 +5180,7 @@ p <- ggplot(plot_data, aes(x = comm_date, y = comm_time_of_day)) +
     axis.ticks.y = element_line(),
     axis.text.x = element_text(size = 6, angle = 45, hjust = 1),
     axis.title.x = element_text(margin = margin(t = 10), size = 7),
-    panel.spacing = unit(0.5, "lines"),  # Applies to both x and y spacing
+    panel.spacing = unit(0.5, "lines"),
     strip.text = element_text(size = 8, face = "bold"),
     legend.position = "bottom",
     legend.text = element_text(size = 6),
@@ -4995,6 +5189,8 @@ p <- ggplot(plot_data, aes(x = comm_date, y = comm_time_of_day)) +
 
 # -- Step 5: Convert to plotly
 ggplotly(p, tooltip = "text")
+
+
 ```
 
 ### 9.6.1.1 Findings in sequential order:
@@ -5202,15 +5398,15 @@ ggplotly(p, tooltip = "text")
 +==============================================================================================================================+==========================================================================================================================================================================================================================================================================================================================================+
 | Which vessel was the suspicious permit #CR-7844 prepared for?                                                                | From question 2 and 4, we know this is V. Miesel's Marine Research Permit, and prepared for Mako (lead vessel), Neptune, and Remora.                                                                                                                                                                                                     |
 |                                                                                                                              |                                                                                                                                                                                                                                                                                                                                          |
-| (See 8.6.1)                                                                                                                  |                                                                                                                                                                                                                                                                                                                                          |
+| (See 9.6.1.1)                                                                                                                |                                                                                                                                                                                                                                                                                                                                          |
 +------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | What suspicious activity was performed at Nemo Reef? Which day was it?                                                       | 14 Oct 2040 for a music video production.                                                                                                                                                                                                                                                                                                |
 |                                                                                                                              |                                                                                                                                                                                                                                                                                                                                          |
-| (See 8.6.2)                                                                                                                  |                                                                                                                                                                                                                                                                                                                                          |
+| (See 9.6.2)                                                                                                                  |                                                                                                                                                                                                                                                                                                                                          |
 +------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Why is underwater lighting placement needed at Nemo Reef?                                                                    | For a music video production.                                                                                                                                                                                                                                                                                                            |
 |                                                                                                                              |                                                                                                                                                                                                                                                                                                                                          |
-| (See 8.6.2)                                                                                                                  |                                                                                                                                                                                                                                                                                                                                          |
+| (See 9.6.2)                                                                                                                  |                                                                                                                                                                                                                                                                                                                                          |
 +------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | What were the expedited approvals and secretive logistics?                                                                   | Permits for Nemo Reef through NR-1045 and CR-788 were expedited. The secretive logistics were the crates and equipment on the vessels for the music video production.                                                                                                                                                                    |
 |                                                                                                                              |                                                                                                                                                                                                                                                                                                                                          |
