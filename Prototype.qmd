@@ -1,7 +1,13 @@
 ---
 title: "Prototype"
-format: docx
-
+format:
+  html:
+    theme: journal          
+    toc: true
+    toc-depth: 2
+    code-fold: true
+    code-summary: "Show the code"
+    page-layout: full
     
 execute:
   echo: true
@@ -5410,7 +5416,7 @@ ggplotly(p, tooltip = "text")
 +------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | What were the expedited approvals and secretive logistics?                                                                   | Permits for Nemo Reef through NR-1045 and CR-788 were expedited. The secretive logistics were the crates and equipment on the vessels for the music video production.                                                                                                                                                                    |
 |                                                                                                                              |                                                                                                                                                                                                                                                                                                                                          |
-| (See 8.6.1)                                                                                                                  |                                                                                                                                                                                                                                                                                                                                          |
+| (See 9.6.1 and 9.6.2)                                                                                                        |                                                                                                                                                                                                                                                                                                                                          |
 +------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Who were the high-level Oceanus officials, Sailor Shift’s team, local influential families, and local conservationist group? | **Oceanus Officials**: Commissioner Blake, Commissioner Torres, Council Knowles, The Middleman, Jensen, Liam Thorne                                                                                                                                                                                                                      |
 |                                                                                                                              |                                                                                                                                                                                                                                                                                                                                          |
